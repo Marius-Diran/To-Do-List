@@ -20,4 +20,17 @@
   @apply text-gray-500
 }
 
+.task-input::placeholder {
+  @apply text-white
+}
+
+input[type="checkbox"]:checked + .custom-checkbox {
+  @apply line-through;
+  @apply text-gray-500;
+}
+
+.custom-checkbox {
+  @apply transition-all ease-in-out duration-300
+}
+
 
