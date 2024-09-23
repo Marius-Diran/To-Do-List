@@ -922,6 +922,23 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.task-li{
+  position: relative;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  height: 5.5vh;
+  width: 80%;
+  border-width: 1px;
+}
+
+input[type="checkbox"]{
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 0.75rem;
+}
+
 input[type="checkbox"]:checked + .custom-checkbox{
   text-decoration-line: line-through;
   --tw-text-opacity: 1;
@@ -934,9 +951,13 @@ input[type="checkbox"]:checked + .custom-checkbox{
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.delete-task-button{
+  position: absolute;
+  left: 8rem;
+  top: 0.5rem;
+}
+
 .hover\:bg-slate-600:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
 }
-
-

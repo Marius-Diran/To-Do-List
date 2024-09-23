@@ -24,13 +24,23 @@
   @apply text-white
 }
 
+.task-li {
+  @apply w-[80%] h-[5.5vh] mx-12 my-4 border relative;
+}
+
+input[type="checkbox"] {
+  @apply mx-4 mt-3;
+}
+
 input[type="checkbox"]:checked + .custom-checkbox {
   @apply line-through;
   @apply text-gray-500;
 }
 
 .custom-checkbox {
-  @apply transition-all ease-in-out duration-300
+  @apply transition-all ease-in-out duration-300;
 }
 
-
+.delete-task-button {
+  @apply absolute left-32 top-2;
+}
