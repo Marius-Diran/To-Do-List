@@ -613,11 +613,6 @@ video {
   margin-right: 2.5rem;
 }
 
-.mx-12{
-  margin-left: 3rem;
-  margin-right: 3rem;
-}
-
 .mx-4{
   margin-left: 1rem;
   margin-right: 1rem;
@@ -930,7 +925,6 @@ video {
   margin-bottom: 1rem;
   height: 5.5vh;
   width: 80%;
-  border-width: 1px;
 }
 
 input[type="checkbox"]{

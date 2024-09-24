@@ -1,10 +1,12 @@
 const toDoForm = document.querySelector('form');
 const toDoInput = document.querySelector('#todo-input');
 const toDoUl = document.querySelector('.todo-ul');
+const addTaskButton = document.querySelector('#add-task-button');
 
-let allToDos = [];
+let allToDos = loadTodos();
+updateTodoList();
 
-toDoForm.addEventListener('submit', (e) => {
+addTaskButton.addEventListener('click', (e) => {
   e.preventDefault();
   addTodo();
 });
@@ -12,9 +14,13 @@ toDoForm.addEventListener('submit', (e) => {
 function addTodo(){
   const toDos = toDoInput.value.trim();
   if(toDos.length > 0){
-    allToDos.push(toDos);
+    const todoObject = {
+      text: toDos,  
+      completed: false
+    }
+    allToDos.push(todoObject);
     toDoInput.value = '';
-    console.log(allToDos);
+    saveTodos();
     updateTodoList();
   } else {
     alert('Please enter a task');
@@ -24,21 +30,50 @@ function addTodo(){
 function createTodo(todos, todoIndex){
   const todoLi = document.createElement('li');
   const todoId = `todo-${todoIndex}`;
+  const todoText = todos.text;
   todoLi.className = 'task-li';
   todoLi.innerHTML = `
     <input type="checkbox" id="${todoId}" class="mx-4 mt-3">
-    <label class="custom-checkbox transition-all ease-in-out duration-300" for="${todoId}">${todos}</label>
+    <label class="custom-checkbox transition-all ease-in-out duration-300" for="${todoId}">${todoText}</label>
     <button class="delete-task-button ml-[47vw]">
       <i class="fa-solid fa-trash" style="color: #62676f;"></i>
     </button>
   `;
+
+  const deleteButton = todoLi.querySelector('.delete-task-button');
+  deleteButton.addEventListener('click', () => {
+    deleteTodo(todoIndex);
+  })
+
+  const checkBox = todoLi.querySelector('input');
+  checkBox.addEventListener('change', () => {
+    todos.completed = checkBox.checked;
+    saveTodos();
+    updateTodoList();
+  })
+  checkBox.checked = todos.completed;
   return todoLi;
 }
 
 function updateTodoList(){
   toDoUl.innerHTML = '';
   allToDos.forEach((todos, todoIndex) => {
-    const todoLi = createTodo(todos, todoIndex); // {{ edit_1 }}
+    const todoLi = createTodo(todos, todoIndex);
     toDoUl.append(todoLi);
   })
+  }
+
+function deleteTodo(todoIndex){
+  allToDos.splice(todoIndex, 1);
+  saveTodos();
+  updateTodoList();
+}
+
+function saveTodos(){
+  localStorage.setItem('todos', JSON.stringify(allToDos));
+}
+
+function loadTodos(){
+  const todos = localStorage.getItem('todos') || '[]';
+  return JSON.parse(todos);
 }
