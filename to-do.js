@@ -2,14 +2,21 @@ const toDoForm = document.querySelector('form');
 const toDoInput = document.querySelector('#todo-input');
 const toDoUl = document.querySelector('.todo-ul');
 const addTaskButton = document.querySelector('#add-task-button');
+const searchBar = document.querySelector('#search-bar');
 
 let allToDos = loadTodos();
-updateTodoList();
 
-addTaskButton.addEventListener('click', (e) => {
+document.addEventListener('DOMContentLoaded', () => {
+  updateTodoList();
+  addTaskButton.addEventListener('click', handleAddTask);
+  searchBar.addEventListener('input', searchTask);
+});
+
+function handleAddTask(e) {
   e.preventDefault();
   addTodo();
-});
+};
+
 
 function addTodo(){
   const toDos = toDoInput.value.trim();
@@ -76,4 +83,14 @@ function saveTodos(){
 function loadTodos(){
   const todos = localStorage.getItem('todos') || '[]';
   return JSON.parse(todos);
+}
+
+function searchTask() {
+  const searchQuery = searchBar.value.trim().toLowerCase();
+  const taskLi = document.querySelectorAll('.task-li');
+
+  taskLi.forEach(taskLi => {
+    const taskText = taskLi.textContent.toLowerCase();
+    taskLi.style.display = taskText.includes(searchQuery) ? 'block' : 'none';
+  });
 }
