@@ -2,21 +2,15 @@ const toDoForm = document.querySelector('form');
 const toDoInput = document.querySelector('#todo-input');
 const toDoUl = document.querySelector('.todo-ul');
 const addTaskButton = document.querySelector('#add-task-button');
-const searchBar = document.querySelector('#search-bar');
+const searchBar = document.querySelector('#search');
 
 let allToDos = loadTodos();
+updateTodoList();
 
-document.addEventListener('DOMContentLoaded', () => {
-  updateTodoList();
-  addTaskButton.addEventListener('click', handleAddTask);
-  searchBar.addEventListener('input', searchTask);
-});
-
-function handleAddTask(e) {
+addTaskButton.addEventListener('click', (e) => {
   e.preventDefault();
   addTodo();
-};
-
+});
 
 function addTodo(){
   const toDos = toDoInput.value.trim();
@@ -86,11 +80,16 @@ function loadTodos(){
 }
 
 function searchTask() {
-  const searchQuery = searchBar.value.trim().toLowerCase();
-  const taskLi = document.querySelectorAll('.task-li');
+  let searchQuery = searchBar.value.trim().toLowerCase();
+  let taskLi = document.querySelectorAll('.task-li');
 
-  taskLi.forEach(taskLi => {
-    const taskText = taskLi.textContent.toLowerCase();
-    taskLi.style.display = taskText.includes(searchQuery) ? 'block' : 'none';
-  });
+  for (let i = 0; i < taskLi.length; i++) {
+    if(!taskLi[i].textContent.toLowerCase().includes(searchQuery)){
+      taskLi[i].style.display = 'none';
+    } else {
+      taskLi[i].style.display = 'block';
+    }
+  }
 }
+
+searchBar.addEventListener('keyup', searchTask);
