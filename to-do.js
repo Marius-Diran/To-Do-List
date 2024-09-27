@@ -7,11 +7,13 @@ const searchBar = document.querySelector('#search');
 let allToDos = loadTodos();
 updateTodoList();
 
+// Making the add task button active
 addTaskButton.addEventListener('click', (e) => {
   e.preventDefault();
   addTodo();
 });
 
+// Adding the task to the list
 function addTodo(){
   const toDos = toDoInput.value.trim();
   if(toDos.length > 0){
@@ -28,6 +30,7 @@ function addTodo(){
   }
 }
 
+// Creating the task list
 function createTodo(todos, todoIndex){
   const todoLi = document.createElement('li');
   const todoId = `todo-${todoIndex}`;
@@ -56,29 +59,34 @@ function createTodo(todos, todoIndex){
   return todoLi;
 }
 
+// Updating the task list
 function updateTodoList(){
   toDoUl.innerHTML = '';
   allToDos.forEach((todos, todoIndex) => {
     const todoLi = createTodo(todos, todoIndex);
     toDoUl.append(todoLi);
   })
-  }
+}
 
+// Deleting the task
 function deleteTodo(todoIndex){
   allToDos.splice(todoIndex, 1);
   saveTodos();
   updateTodoList();
 }
 
+// Saving the task
 function saveTodos(){
   localStorage.setItem('todos', JSON.stringify(allToDos));
 }
 
+// Loading the task
 function loadTodos(){
   const todos = localStorage.getItem('todos') || '[]';
   return JSON.parse(todos);
 }
 
+// Searching the task
 function searchTask() {
   let searchQuery = searchBar.value.trim().toLowerCase();
   let taskLi = document.querySelectorAll('.task-li');
