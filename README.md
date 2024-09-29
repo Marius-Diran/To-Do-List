@@ -12,7 +12,7 @@ This is a simple to-do list website built with HTML, a CSS Framework, and JavaSc
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-username/to-do-list-website.git
+   git clone https://github.com/Marius-Diran/to-do-list-website.git
    ```
 2. Install the dependencies:
    ```
