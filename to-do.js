@@ -1,3 +1,4 @@
+// Selecting the elements
 const toDoForm = document.querySelector('form');
 const toDoInput = document.querySelector('#todo-input');
 const toDoUl = document.querySelector('.todo-ul');
