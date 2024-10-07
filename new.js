@@ -4,75 +4,11 @@ const toDoInput = document.querySelector('#todo-input');
 const toDoUl = document.querySelector('.todo-ul');
 const addTaskButton = document.querySelector('#add-task-button');
 const searchBar = document.querySelector('#search');
-const listContainer = document.querySelector('[data-lists]');
-const listDisplayContainer = document.querySelector('[data-list-display-container]');
-const LOCAL_STORAGE_LIST_ID_KEY = 'task.selectedListId';
+const listItems = document.querySelectorAll('.list-item');
 
-let selectedListId = localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY);
-
-// Selecting the list
-listContainer.addEventListener('click', e => {
-  if (e.target.tagName.toLowerCase() === 'li') {
-    selectedListId = e.target.dataset.listId;
-    saveAndRender();
-  }
-});
-
-let lists = [{
-  id: 1,
-  name: 'Your Day'
-}, {
-  id: 2,
-  name: 'Important'
-}, {
-  id: 3,
-  name: 'Planned'
-}, {
-  id: 4,
-  name: 'All Tasks'
-}];
-
+let currentList = 'my-day';
 let allToDos = loadTodos();
 updateTodoList();
-
-// Rendering the list
-function renderList() {
-  clearElements(listContainer);
-
-  const listIcons = {
-    'Your Day': 'fa-solid fa-sun',
-    'Important': 'fa-regular fa-star',
-    'Planned': 'fa-regular fa-calendar-alt',
-    'All Tasks': 'fa-solid fa-house-user',
-  };
-
-  const listStyles = {
-    'Your Day': 'color: #74C0FC;',
-    'Important': 'color: #925490;',
-    'Planned': 'color: #63E6BE;',
-    'All Tasks': 'color: #475569;'
-  };
-
-  lists.forEach(list => {
-    const listElement = document.createElement('li');
-    listElement.dataset.listId = list.id;
-    listElement.classList.add('list-item', 'hover:cursor-pointer');
-    const iconsClass = listIcons[list.name] || 'fa-solid fa-list';
-    const listStyle = listStyles[list.name] || '';
-    listElement.innerHTML = `<h1 class="text-base font-JetBrainsMono ml-16 my-4"><i class="${iconsClass} mr-4 text-base" style="color: #74C0FC; ${listStyle}"></i>${list.name}</h1>`;
-    if (list.id === selectedListId) {
-      listElement.classList.add('active-list');
-    }
-    listContainer.appendChild(listElement);
-  });
-}
-
-// Clearing the list
-function clearElements(element) {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-}
 
 // Making the add task button active
 addTaskButton.addEventListener('click', (e) => {
@@ -88,10 +24,10 @@ function addTodo(){
       text: toDos,  
       completed: false
     }
-    if (!allToDos) {
-      allToDos = [];
+    if (!allToDos[currentList]) {
+      allToDos[currentList] = [];
     }
-    allToDos.push(todoObject);
+    allToDos[currentList].push(todoObject);
     toDoInput.value = '';
     saveTodos();
     updateTodoList();
@@ -132,8 +68,8 @@ function createTodo(todos, todoIndex){
 // Updating the task list
 function updateTodoList(){
   toDoUl.innerHTML = '';
-  if (allToDos) {
-    allToDos.forEach((todos, todoIndex) => {
+  if (allToDos[currentList]) {
+    allToDos[currentList].forEach((todos, todoIndex) => {
       const todoLi = createTodo(todos, todoIndex);
       toDoUl.append(todoLi);
     });
@@ -142,7 +78,7 @@ function updateTodoList(){
 
 // Deleting the task
 function deleteTodo(todoIndex){
-  allToDos.splice(todoIndex, 1);
+  allToDos[currentList].splice(todoIndex, 1);
   saveTodos();
   updateTodoList();
 }
@@ -172,16 +108,12 @@ function searchTask() {
   }
 }
 
-// saving to local storage
-function save() {
-  localStorage.setItem(LOCAL_STORAGE_LIST_ID_KEY, selectedListId);
-}
-
-// saving and rendering
-function saveAndRender() {
-  save();
-  renderList();
-  updateTodoList();
-}
-
 searchBar.addEventListener('keyup', searchTask);
+
+// Switching between lists
+listItems.forEach(item => {
+  item.addEventListener('click', () => {
+    currentList = item.id;
+    updateTodoList();
+  });
+});

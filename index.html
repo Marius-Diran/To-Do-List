@@ -16,16 +16,16 @@
         <div class="search-container relative">
           <i class="fa-solid fa-magnifying-glass absolute left-12 top-[7.1vh] text-sm" style="color: #6b7280;"></i><input type="search" id="search" placeholder="Search" class="my-[6vh] mx-10 h-[4vh] font-JetBrainsMono px-8 text-gray-800 rounded-md text-sm bg-gray-200 outline-none search">
         </div>
-        <ul class="list" data-list>
-          <li class="list-item hover:cursor-pointer"><h1 class="text-base font-JetBrainsMono ml-16"><i class="fa-solid fa-sun mr-4 text-base" style="color: #74C0FC;"></i>My Day</h1></li>
+        <ul class="list" data-lists>
+          <li class="list-item hover:cursor-pointer active-list"><h1 class="text-base font-JetBrainsMono ml-16"><i class="fa-solid fa-sun mr-4 text-base" style="color: #74C0FC;"></i>My Day</h1></li>
           <li class="list-item hover:cursor-pointer"><h1 class="text-base font-JetBrainsMono ml-16 my-4"><i class="fa-regular fa-star mr-3 text-base" style="color: #925490;"></i>Important</h1></li>
           <li class="list-item hover:cursor-pointer"><h1 class="text-base font-JetBrainsMono ml-16 my-4"><i class="fa-regular fa-calendar mr-3 text-base" style="color: #63E6BE;"></i>Planned</h1></li>
           <li class="list-item hover:cursor-pointer"><h1 class="text-base font-JetBrainsMono ml-16 my-4"><i class="fa-solid fa-house-user mr-3 text-base" style="color: #475569;"></i>All Tasks</h1></li>
         </ul>
       </div>
 
-      <div class="flex-auto w-[75%] border border-solid h-[90vh] my-10 rounded-tr-lg rounded-br-lg bg-slate-100 main-panel overflow-y-auto">
-        <h1 class="text-2xl font-Lobster ml-[28vw] mt-8 mb-4"><i class="fa-solid fa-sun mr-4 text-3xl" style="color: #74C0FC;"></i>My Day</h1>
+      <div class="flex-auto w-[75%] border border-solid h-[90vh] my-10 rounded-tr-lg rounded-br-lg bg-slate-100 main-panel overflow-y-auto" data-list-display-container>
+        <h1 class="text-2xl font-Lobster ml-[28vw] mt-8 mb-4" data-list-title><i class="fa-solid fa-sun mr-4 text-3xl" style="color: #74C0FC;"></i>Your Day</h1>
 
         <form>
 
@@ -34,7 +34,7 @@
 
         </form>
 
-        <ul class="todo-ul">
+        <ul class="todo-ul" data-task>
 
           <!-- <li class="task-li">
             <input type="checkbox" id="task-1">
@@ -48,7 +48,7 @@
 
       </div>
 
-      <div class="flex-auto w-[75%] border border-solid h-[90vh] my-10 rounded-tr-lg rounded-br-lg bg-slate-100 main-panel overflow-y-auto hidden">
+      <div class="flex-auto w-[75%] border border-solid h-[90vh] my-10 rounded-tr-lg rounded-br-lg bg-slate-100 main-panel overflow-y-auto hidden" id="important">
         <h1 class="text-2xl font-Lobster ml-[28vw] mt-8 mb-4"><i class="fa-solid fa-star mr-4 text-3xl" style="color: #925490;"></i>Important</h1>
 
         <form>
