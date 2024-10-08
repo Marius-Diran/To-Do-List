@@ -80,7 +80,7 @@ function renderList() {
 listContainer.addEventListener('click', (e) => {
   const listItem = e.target.closest('li');
   if (listItem) {
-    selectedListId = listItem.id
+    selectedListId = listItem.id;
     saveAndRender();
   }
 });
@@ -98,6 +98,28 @@ document.head.appendChild(style);
 function render() {
   clearElements(listContainer);
   renderList();
+
+  const selectedList = lists.find(list => `list-item-${lists.indexOf(list)}` === selectedListId);
+  if (selectedListId === null) {
+    listDisplayContainer.style.display = 'none';
+  } else {
+    listDisplayContainer.style.display = '';
+    const listIcon = {
+      'Your Day': 'fa-solid fa-sun',
+      'Important': 'fa-regular fa-star',
+      'Planned': 'fa-regular fa-calendar-alt',
+      'All Tasks': 'fa-solid fa-house-user',
+    };
+    const listStyle = {
+      'Your Day': 'color: #74C0FC;',
+      'Important': 'color: #925490;',
+      'Planned': 'color: #63E6BE;',
+      'All Tasks': 'color: #475569;'
+    };
+    const iconClass = listIcon[selectedList.name];
+    const iconStyle = listStyle[selectedList.name];
+    listTitleElement.innerHTML = `<i class="${iconClass}" style="${iconStyle}"></i> ${selectedList.name}`;
+  }
 };
 
 function save() {
