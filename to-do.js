@@ -122,17 +122,7 @@ function render() {
   }
 };
 
-let allToDos = {};
-
-function loadTodos() {
-  const todos = JSON.parse(localStorage.getItem('todos')) || {};
-  lists.forEach(list => {
-    list.todos = todos[list.name] || [];
-  });
-  allToDos = todos;
-  return todos;
-}
-
+// let allToDos = {};
 loadTodos();
 updateTodoList();
 
@@ -144,19 +134,23 @@ addTaskButton.addEventListener('click', (e) => {
 
 // Adding the task to the list
 function addTodo() {
-  const toDos = toDoInput.value.trim();
+  const toDos = toDoInput.value.trim();  // Get the task text from input
   if (toDos.length > 0) {
     const todoObject = {
-      id: Date.now().toString(),
       text: toDos,
       completed: false
     };
 
-    toDoInput.value = '';
+    // Find the selected list
     const selectedList = lists.find(list => `list-item-${lists.indexOf(list)}` === selectedListId);
-    selectedList.todos.push(todoObject);
-    saveTodos();
-    updateTodoList();
+    if (selectedList) {
+      // Add the new task to the selected list's todos array
+      selectedList.todos.push(todoObject);
+      
+      saveTodos();  // Save the updated tasks for the selected list
+      updateTodoList();  // Re-render the task list for the selected list
+    }
+    toDoInput.value = '';
   } else {
     alert('Please enter a task');
   }
@@ -191,14 +185,61 @@ function createTodo(todos, todoIndex){
   return todoLi;
 }
 
+// Creating the task list for "All Tasks"
+function createTodoForAllTasks(todos, listName, todoIndex) {
+  const todoLi = document.createElement('li');
+  const todoId = `todo-${todoIndex}-${listName}`;  // Unique ID based on the task and the list name
+  const todoText = todos.text;
+  todoLi.className = 'task-li';
+  todoLi.innerHTML = `
+    <input type="checkbox" id="${todoId}" class="mx-4 mt-3">
+    <label class="custom-checkbox transition-all ease-in-out duration-300" for="${todoId}">
+      ${todoText} <span class="text-sm text-gray-500">(${listName})</span>  <!-- Display the list name -->
+    </label>
+    <button class="delete-task-button ml-[47vw]">
+      <i class="fa-solid fa-trash" style="color: #62676f;"></i>
+    </button>
+  `;
+
+  // Add event listener for deletion
+  const deleteButton = todoLi.querySelector('.delete-task-button');
+  deleteButton.addEventListener('click', () => {
+    deleteTodoForAllTasks(todoIndex, listName);  // Call deleteTodoForAllTasks when deleting from All Tasks
+  });
+
+  // Handle checkbox changes for completed/uncompleted tasks
+  const checkBox = todoLi.querySelector('input');
+  checkBox.addEventListener('change', () => {
+    todos.completed = checkBox.checked;
+    saveTodos();  // Save after a task is checked/unchecked
+    updateTodoList();  // Re-render the task list
+  });
+  checkBox.checked = todos.completed;  // Set the checkbox state
+
+  return todoLi;
+}
+
 // Updating the task list
 function updateTodoList() {
-  toDoUl.innerHTML = '';
+  clearTasks();  // Clear any existing tasks from the UI
+  
   const selectedList = lists.find(list => `list-item-${lists.indexOf(list)}` === selectedListId);
-  if (selectedList && selectedList.todos) {
+
+  if (selectedList && selectedList.name === 'All Tasks') {
+    // If "All Tasks" is selected, gather tasks from all lists
+    lists.forEach(list => {
+      if (list.name !== 'All Tasks') {  // Skip the "All Tasks" list itself
+        list.todos.forEach((todos, todoIndex) => {
+          const todoLi = createTodoForAllTasks(todos, list.name, todoIndex);  // Use a new helper function to handle All Tasks
+          toDoUl.append(todoLi);  // Add each task to the "All Tasks" list
+        });
+      }
+    });
+  } else if (selectedList && selectedList.todos) {
+    // For all other lists, render their specific tasks
     selectedList.todos.forEach((todos, todoIndex) => {
-      const todoLi = createTodo(todos, todoIndex);
-      toDoUl.append(todoLi);
+      const todoLi = createTodo(todos, todoIndex);  // Create a task element
+      toDoUl.append(todoLi);  // Append it to the task list
     });
   }
 }
@@ -211,18 +252,27 @@ function deleteTodo(todoIndex) {
   updateTodoList();
 }
 
+// Deleting the task for "All Tasks"
+function deleteTodoForAllTasks(todoIndex, listName) {
+  const list = lists.find(list => list.name === listName);  // Find the correct list
+  list.todos.splice(todoIndex, 1);  // Remove the task from the specific list's todos
+  saveTodos();  // Save the changes
+  updateTodoList();  // Re-render the task list
+}
+
 // Saving the task
 function saveTodos() {
-  localStorage.setItem('todos', JSON.stringify(allToDos));
+  const selectedList = lists.find(list => `list-item-${lists.indexOf(list)}` === selectedListId);
+  if (selectedList) {
+    localStorage.setItem(selectedList.name, JSON.stringify(selectedList.todos));  // Save the tasks for the selected list
+  }
 }
 
 // Loading the task
 function loadTodos() {
-  const todos = JSON.parse(localStorage.getItem('todos')) || {};
   lists.forEach(list => {
-    list.todos = todos[list.name] || [];
+    list.todos = JSON.parse(localStorage.getItem(list.name)) || [];  // Load the tasks for each list from localStorage
   });
-  return todos;
 }
 
 // Searching the task
@@ -239,6 +289,10 @@ function searchTask() {
   }
 }
 
+function clearTasks() {
+  toDoUl.innerHTML = '';  // Clears all tasks in the current list display
+}
+
 function save() {
   localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
   localStorage.setItem(LOCAL_STORAGE_LIST_ID_KEY, selectedListId);
@@ -247,6 +301,8 @@ function save() {
 function saveAndRender() {
   save();
   render();
+  clearTasks();
+  updateTodoList();
 }
 
 saveAndRender();
