@@ -15,12 +15,22 @@ const listDisplayContainer = document.querySelector('[data-list-display-containe
 const listTitleElement = document.querySelector('[data-list-title]');
 const taskContainer = document.querySelector('[data-tasks]');
 
-let lists = [
-  {name: 'Your Day'},
-  {name: 'Important'},
-  {name: 'Planned'},
-  {name: 'All Tasks'}
-];
+let lists;
+try {
+  lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [
+    {name: 'Your Day'},
+    {name: 'Important'},
+    {name: 'Planned'},
+    {name: 'All Tasks'}
+  ];
+} catch (error) {
+  lists = [
+    {name: 'Your Day'},
+    {name: 'Important'},
+    {name: 'Planned'},
+    {name: 'All Tasks'}
+  ];
+}
 
 // clearing the default list
 function clearElements(element) {
@@ -56,14 +66,30 @@ function renderList() {
     listElement.innerHTML = `<h1 class="text-base font-JetBrainsMono ml-16 my-4"><i class="${listIcons} mr-4 text-base" style="color: #74C0FC; ${iconStyle}"></i>${list.name}</h1>`;
     listElement.id = `list-item-${index}`
     listContainer.appendChild(listElement);
-
-    console.log(listElement.id)
   });
 };
+
+// Event listener for the list items
+listContainer.addEventListener('click', (e) => {
+  const listItem = e.target.closest('li');
+  if (listItem) {
+    selectedListId = listItem.id
+    saveAndRender();
+  }
+});
 
 function render() {
   clearElements(listContainer);
   renderList();
 };
 
-render();
+function save() {
+  localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
+}
+
+function saveAndRender() {
+  save();
+  render();
+}
+
+saveAndRender();
