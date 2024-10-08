@@ -6,39 +6,59 @@ const addTaskButton = document.querySelector('#add-task-button');
 const searchBar = document.querySelector('#search');
 const listContainer = document.querySelector('[data-lists]');
 const listDisplayContainer = document.querySelector('[data-list-display-container]');
+const listTitleElement = document.querySelector('[data-list-title]');
+const taskContainer = document.querySelector('[data-tasks]');
 const LOCAL_STORAGE_LIST_ID_KEY = 'task.selectedListId';
+const LOCAL_STORAGE_LIST_KEY = 'task.lists';
+
+let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [
+  {id: '1', name: 'Your Day'},
+  {id: '2', name: 'Important'},
+  {id: '3', name: 'Planned'}, 
+  {id: '4', name: 'All Tasks'}
+];
 
 let selectedListId = localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY);
-
-// Selecting the list
-listContainer.addEventListener('click', e => {
-  if (e.target.tagName.toLowerCase() === 'li') {
-    selectedListId = e.target.dataset.listId;
-    saveAndRender();
-  }
-});
-
-let lists = [{
-  id: 1,
-  name: 'Your Day'
-}, {
-  id: 2,
-  name: 'Important'
-}, {
-  id: 3,
-  name: 'Planned'
-}, {
-  id: 4,
-  name: 'All Tasks'
-}];
 
 let allToDos = loadTodos();
 updateTodoList();
 
-// Rendering the list
-function renderList() {
-  clearElements(listContainer);
+// document.addEventListener('DOMContentLoaded', () => {
+//   const listElement = document.querySelector('.list');
+//   const listItems = listElement.querySelectorAll('.list-item');
+  
+//   const listArray = Array.from(listItems).map(item => item.textContent.trim());
 
+//   localStorage.setItem('todoList', JSON.stringify(listArray));
+// });
+
+// Selecting the list
+listContainer.addEventListener('click', (e) => {
+  if (e.target.tagName.toLowerCase() === 'li') {
+    selectedListId = e.target.dataset.listId;
+    console.log(e.target);
+    console.log(e.target.dataset);
+    console.log(selectedListId);
+    saveAndRender();
+  }
+});
+
+// Rendering the list
+function render() {
+  clearElements(listContainer);
+  renderList();
+
+  const selectedList = lists.find(list => list.id === selectedListId); 
+  if (selectedListId === null) {
+    listDisplayContainer.style.display = 'none';
+  } else {  
+    listDisplayContainer.style.display = '';
+    listTitleElement.innerText = selectedList.name;
+  }
+}
+
+// rendering the list
+function renderList() {
   const listIcons = {
     'Your Day': 'fa-solid fa-sun',
     'Important': 'fa-regular fa-star',
@@ -172,8 +192,9 @@ function searchTask() {
   }
 }
 
-// saving to local storage
+// saving to list
 function save() {
+  localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
   localStorage.setItem(LOCAL_STORAGE_LIST_ID_KEY, selectedListId);
 }
 

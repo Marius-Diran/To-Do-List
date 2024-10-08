@@ -703,10 +703,6 @@ video {
   display: list-item;
 }
 
-.hidden{
-  display: none;
-}
-
 .h-\[20vh\]{
   height: 20vh;
 }
