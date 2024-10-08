@@ -22,6 +22,13 @@ let lists = [
   {name: 'All Tasks'}
 ];
 
+// clearing the default list
+function clearElements(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
 // creating the list
 
 function renderList() {
@@ -41,15 +48,22 @@ function renderList() {
     'All Tasks': 'color: #475569;'
   };
 
-  listContainer.innerHTML = ''; // Clear the existing list
-  lists.forEach(list => {
+  lists.forEach((list, index) => {
     const listElement = document.createElement('li');
-    listElement.classList.add('list-item');
+    listElement.classList.add('list-item', 'hover:cursor-pointer');
     let listIcons = listIcon[list.name]; //Creating a variable to store the list icons inside the list for each list
     let iconStyle = listStyle[list.name]; //Creating a variable to store the list style inside the list for each list
     listElement.innerHTML = `<h1 class="text-base font-JetBrainsMono ml-16 my-4"><i class="${listIcons} mr-4 text-base" style="color: #74C0FC; ${iconStyle}"></i>${list.name}</h1>`;
+    listElement.id = `list-item-${index}`
     listContainer.appendChild(listElement);
+
+    console.log(listElement.id)
   });
 };
 
-renderList();
+function render() {
+  clearElements(listContainer);
+  renderList();
+};
+
+render();
