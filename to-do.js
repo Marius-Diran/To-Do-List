@@ -122,6 +122,20 @@ function render() {
   }
 };
 
+let allToDos = {};
+
+function loadTodos() {
+  const todos = JSON.parse(localStorage.getItem('todos')) || {};
+  lists.forEach(list => {
+    list.todos = todos[list.name] || [];
+  });
+  allToDos = todos;
+  return todos;
+}
+
+loadTodos();
+updateTodoList();
+
 // Making the add task button active
 addTaskButton.addEventListener('click', (e) => {
   e.preventDefault();
@@ -129,18 +143,18 @@ addTaskButton.addEventListener('click', (e) => {
 });
 
 // Adding the task to the list
-function addTodo(){
+function addTodo() {
   const toDos = toDoInput.value.trim();
-  if(toDos.length > 0){
+  if (toDos.length > 0) {
     const todoObject = {
-      text: toDos,  
+      id: Date.now().toString(),
+      text: toDos,
       completed: false
-    }
-    if (!allToDos) {
-      allToDos = [];
-    }
-    allToDos.push(todoObject);
+    };
+
     toDoInput.value = '';
+    const selectedList = lists.find(list => `list-item-${lists.indexOf(list)}` === selectedListId);
+    selectedList.todos.push(todoObject);
     saveTodos();
     updateTodoList();
   } else {
@@ -178,10 +192,11 @@ function createTodo(todos, todoIndex){
 }
 
 // Updating the task list
-function updateTodoList(){
+function updateTodoList() {
   toDoUl.innerHTML = '';
-  if (allToDos) {
-    allToDos.forEach((todos, todoIndex) => {
+  const selectedList = lists.find(list => `list-item-${lists.indexOf(list)}` === selectedListId);
+  if (selectedList && selectedList.todos) {
+    selectedList.todos.forEach((todos, todoIndex) => {
       const todoLi = createTodo(todos, todoIndex);
       toDoUl.append(todoLi);
     });
@@ -189,21 +204,25 @@ function updateTodoList(){
 }
 
 // Deleting the task
-function deleteTodo(todoIndex){
-  allToDos.splice(todoIndex, 1);
+function deleteTodo(todoIndex) {
+  const selectedList = lists.find(list => `list-item-${lists.indexOf(list)}` === selectedListId);
+  selectedList.todos.splice(todoIndex, 1);
   saveTodos();
   updateTodoList();
 }
 
 // Saving the task
-function saveTodos(){
+function saveTodos() {
   localStorage.setItem('todos', JSON.stringify(allToDos));
 }
 
 // Loading the task
-function loadTodos(){
-  const todos = localStorage.getItem('todos') || '{}';
-  return JSON.parse(todos);
+function loadTodos() {
+  const todos = JSON.parse(localStorage.getItem('todos')) || {};
+  lists.forEach(list => {
+    list.todos = todos[list.name] || [];
+  });
+  return todos;
 }
 
 // Searching the task
@@ -231,3 +250,5 @@ function saveAndRender() {
 }
 
 saveAndRender();
+
+searchBar.addEventListener('keyup', searchTask);
