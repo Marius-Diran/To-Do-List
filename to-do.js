@@ -32,6 +32,9 @@ try {
   ];
 }
 
+let selectedListId = localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY);
+console.log(selectedListId);
+
 // clearing the default list
 function clearElements(element) {
   while (element.firstChild) {
@@ -61,6 +64,10 @@ function renderList() {
   lists.forEach((list, index) => {
     const listElement = document.createElement('li');
     listElement.classList.add('list-item', 'hover:cursor-pointer');
+    // Add a class to indicate the selected list
+    if (`list-item-${index}` === selectedListId) {
+      listElement.classList.add('selected');  // Add a 'selected' class if this is the selected list
+    }
     let listIcons = listIcon[list.name]; //Creating a variable to store the list icons inside the list for each list
     let iconStyle = listStyle[list.name]; //Creating a variable to store the list style inside the list for each list
     listElement.innerHTML = `<h1 class="text-base font-JetBrainsMono ml-16 my-4"><i class="${listIcons} mr-4 text-base" style="color: #74C0FC; ${iconStyle}"></i>${list.name}</h1>`;
@@ -78,6 +85,16 @@ listContainer.addEventListener('click', (e) => {
   }
 });
 
+// Add some CSS for visual feedback when a list is selected
+const style = document.createElement('style');
+style.innerHTML = `
+  .selected {
+    background-color: #d3d3d3;
+    font-weight: bold;
+  }
+`;
+document.head.appendChild(style);
+
 function render() {
   clearElements(listContainer);
   renderList();
@@ -85,6 +102,7 @@ function render() {
 
 function save() {
   localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
+  localStorage.setItem(LOCAL_STORAGE_LIST_ID_KEY, selectedListId);
 }
 
 function saveAndRender() {
