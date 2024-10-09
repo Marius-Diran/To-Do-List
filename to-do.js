@@ -77,7 +77,7 @@ function renderList() {
     // Add a line under the "All Tasks" list item
     if (list.name === 'All Tasks') {
       const hrElement = document.createElement('hr');
-      hrElement.style.borderWidth = '1px';
+      hrElement.style.borderWidth = '1%';
       hrElement.style.borderColor = '#4b5563';
       listContainer.appendChild(hrElement);
     }
