@@ -114,7 +114,7 @@ function render() {
       'All Tasks': 'color: #475569;',
       'Your Day': 'color: #74C0FC;',
       'Important': 'color: #925490;',
-      'Planned': 'color: #63E6BE;'
+      'Planned': 'color: #63E6BE;',
     };
     const iconClass = listIcon[selectedList.name];
     const iconStyle = listStyle[selectedList.name];
