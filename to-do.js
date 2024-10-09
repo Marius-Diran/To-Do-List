@@ -9,6 +9,10 @@ const toDoUl = document.querySelector('.todo-ul');
 const addTaskButton = document.querySelector('#add-task-button');
 const searchBar = document.querySelector('#search');
 const taskForm = document.querySelector('#task-form');
+const listInput = document.querySelector('.list-input');
+const addListButton = document.querySelector('#add-list-button');
+const deleteListButton = document.querySelector('#delete-list-button');
+const fontIcon = document.querySelector('#icon-select');
 
 // data sets
 const listContainer = document.querySelector('.list');
@@ -34,6 +38,45 @@ try {
     {name: 'Planned'}
   ];
 }
+
+addListButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  addList();
+})
+
+deleteListButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  deleteList();
+});
+
+fontIcon.addEventListener('change', function() {
+  let selectedIcon = this.value;
+  document.getElementById('selected-icon').className = selectedIcon;  // Updates the icon
+});
+
+// Adding the list
+function addList() {
+  const listName = listInput.value.trim();
+  const icon = fontIcon.value; // Default icon if none is selected
+  if (listName.length > 0) {
+    const newList = { id: `list-item-${lists.length}`, name: listName, icon: icon, todos: [] };
+    lists.push(newList);
+    saveAndRender();
+    listInput.value = '';
+  } else {
+    alert('Please enter a valid list name');
+  }
+}
+
+function deleteList() {
+  if (lists.length > 4) {
+    lists.pop();
+    saveAndRender();
+  } else {
+    alert('Cannot delete the default lists');
+  }
+}
+
 
 let selectedListId = localStorage.getItem(LOCAL_STORAGE_LIST_ID_KEY);
 console.log(selectedListId);
@@ -71,10 +114,10 @@ function renderList() {
     if (`list-item-${index}` === selectedListId) {
       listElement.classList.add('selected');  // Add a 'selected' class if this is the selected list
     }
-    let listIcons = listIcon[list.name]; //Creating a variable to store the list icons inside the list for each list
-    let iconStyle = listStyle[list.name]; //Creating a variable to store the list style inside the list for each list
+    let listIcons = list.icon || listIcon[list.name]; //Creating a variable to store the list icons inside the list for each list
+    let iconStyle = listStyle[list.name] || 'color: #74C0FC;'; //Creating a variable to store the list style inside the list for each list
     listElement.innerHTML = `<h1 class="text-base font-JetBrainsMono ml-16 my-4"><i class="${listIcons} mr-4 text-base" style="color: #74C0FC; ${iconStyle}"></i>${list.name}</h1>`;
-    listElement.id = `list-item-${index}`
+    listElement.id = `list-item-${index}`;
     listContainer.appendChild(listElement);
 
     // Add a line under the "All Tasks" list item
@@ -95,15 +138,6 @@ listContainer.addEventListener('click', (e) => {
   if (listItem) {
     selectedListId = listItem.id;
     saveAndRender();
-
-    const selectedListName = lists.find(list => `list-item-${lists.indexOf(list)}` === selectedListId).name;
-    if (selectedListName === 'All Tasks') {
-      taskForm.style.display = 'none';
-      toDoUl.classList.add('task-margin-adjust');
-    } else {
-      taskForm.style.display = '';
-      toDoUl.classList.remove('task-margin-adjust');
-    }
   }
 });
 
@@ -142,8 +176,8 @@ function render() {
       'Important': 'color: #925490;',
       'Planned': 'color: #63E6BE;',
     };
-    const iconClass = listIcon[selectedList.name];
-    const iconStyle = listStyle[selectedList.name];
+    const iconClass = selectedList.icon || listIcon[selectedList.name] || 'fa-solid fa-list';
+    const iconStyle = listStyle[selectedList.name] || 'color: #74C0FC;';
     listTitleElement.innerHTML = `<i class="${iconClass}" style="${iconStyle}"></i> ${selectedList.name}`;
   }
 };

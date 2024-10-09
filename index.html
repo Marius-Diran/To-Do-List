@@ -10,7 +10,7 @@
   <div class="container">
     <div class="flex flex-row">
 
-      <div class="flex-auto w-[25%] border border-solid h-[90vh] bg-gray-100 my-10 rounded-tl-lg rounded-bl-lg nav-panel">
+      <div class="flex-auto w-[25%] border border-solid h-[90vh] bg-gray-100 my-10 rounded-tl-lg rounded-bl-lg nav-panel overflow-y-auto">
         <img src="images/To-Do list Logo.png" class="w-[65%] h-[20vh] mx-auto my-4">
         <h1 class="font-Lobster text-3xl text-center">Marius To-Do List</h1>
         <div class="search-container relative">
@@ -21,8 +21,20 @@
 
 
         <form>
-            <input type="text" placeholder="Add a new list" class="w-full h-[4vh] my-4 px-4 text-gray-800 rounded-md text-sm bg-gray-200 outline-none add-list list-input">
-          <button id="add-list-button" class="bg-slate-400 text-white px-4 py-2 rounded-md hover:bg-slate-600">ADD</button>
+          <input type="text" placeholder="Add a new list" class="w-[90%] h-[5vh] my-5 ml-6 px-8 text-gray-800 rounded-md text-sm bg-gray-200 outline-none add-list list-input">
+          <div class="icon-display relative top-[6.7vh] left-[15vw] w-fit">
+            <i id="selected-icon" class="fa-solid fa-list"></i>
+          </div>
+          <select id="icon-select" class="w-[80%] h-[5vh] my-5 mx-8 px-8 text-gray-800 rounded-md text-sm bg-gray-200 outline-none">
+            <option value="fa-solid fa-list">List Icon</option>
+            <option value="fa-solid fa-star">Star Icon</option>
+            <option value="fa-solid fa-heart">Heart Icon</option>
+            <option value="fa-solid fa-check">Check Icon</option>
+          </select>
+            <div class="flex justify-between mx-20 mb-6">
+            <button id="add-list-button" class="bg-slate-400 text-white px-4 py-2 rounded-md hover:bg-slate-600">Add List</button>
+            <button id="delete-list-button" class="bg-slate-400 text-white px-4 py-2 rounded-md hover:bg-slate-600">Delete List</button>
+            </div>
         </form>
         
       </div>
