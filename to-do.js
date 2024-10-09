@@ -81,6 +81,8 @@ function renderList() {
       hrElement.style.borderColor = '#4b5563';
       listContainer.appendChild(hrElement);
     }
+
+    listContainer.style.marginTop = '10vh';
   });
 };
 
