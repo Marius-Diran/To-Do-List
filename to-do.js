@@ -28,7 +28,7 @@ try {
     {name: 'Your Day'},
     {name: 'Important'},
     {name: 'Planned'},
-    {name: 'All Tasks'}
+    {name: 'All Tasks'},
   ];
 }
 
@@ -50,7 +50,7 @@ function renderList() {
     'Your Day': 'fa-solid fa-sun',
     'Important': 'fa-regular fa-star',
     'Planned': 'fa-regular fa-calendar-alt',
-    'All Tasks': 'fa-solid fa-house-user',
+    'All Tasks': 'fa-solid fa-house-user'
   };
 
   // list icons style
