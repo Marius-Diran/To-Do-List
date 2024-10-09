@@ -191,10 +191,29 @@ function createTodoForAllTasks(todos, listName, todoIndex) {
   const todoId = `todo-${todoIndex}-${listName}`;  // Unique ID based on the task and the list name
   const todoText = todos.text;
   todoLi.className = 'task-li';
+
+  // Define the icons for each list
+  const listIcon = {
+    'All Tasks': 'fa-solid fa-house-user',
+    'Your Day': 'fa-solid fa-sun',
+    'Important': 'fa-regular fa-star',
+    'Planned': 'fa-regular fa-calendar-alt'
+  };
+
+  const listStyle = {
+    'All Tasks': 'color: #475569;',
+    'Your Day': 'color: #74C0FC;',
+    'Important': 'color: #925490;',
+    'Planned': 'color: #63E6BE;'
+  };
+
+  const iconClass = listIcon[listName];  // Get the icon class for the list
+  const style = listStyle[listName];  // Get the icon style for the list
+
   todoLi.innerHTML = `
     <input type="checkbox" id="${todoId}" class="mx-4 mt-3">
     <label class="custom-checkbox transition-all ease-in-out duration-300" for="${todoId}">
-      ${todoText} <span class="text-sm text-gray-500">(${listName})</span>  <!-- Display the list name -->
+      ${todoText} <i class="${iconClass} text-sm text-gray-500 absolute left-[45vw]" style="${style}"></i>  <!-- Display the list icon -->
     </label>
     <button class="delete-task-button ml-[47vw]">
       <i class="fa-solid fa-trash" style="color: #62676f;"></i>
