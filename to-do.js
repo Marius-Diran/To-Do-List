@@ -8,12 +8,15 @@ const toDoInput = document.querySelector('#todo-input');
 const toDoUl = document.querySelector('.todo-ul');
 const addTaskButton = document.querySelector('#add-task-button');
 const searchBar = document.querySelector('#search');
+const taskForm = document.querySelector('#task-form');
 
 // data sets
 const listContainer = document.querySelector('.list');
 const listDisplayContainer = document.querySelector('[data-list-display-container]');
 const listTitleElement = document.querySelector('[data-list-title]');
 const taskContainer = document.querySelector('[data-tasks]');
+
+taskForm.style.display = 'none';
 
 let lists;
 try {
@@ -92,6 +95,15 @@ listContainer.addEventListener('click', (e) => {
   if (listItem) {
     selectedListId = listItem.id;
     saveAndRender();
+
+    const selectedListName = lists.find(list => `list-item-${lists.indexOf(list)}` === selectedListId).name;
+    if (selectedListName === 'All Tasks') {
+      taskForm.style.display = 'none';
+      toDoUl.classList.add('task-margin-adjust');
+    } else {
+      taskForm.style.display = '';
+      toDoUl.classList.remove('task-margin-adjust');
+    }
   }
 });
 
@@ -101,6 +113,10 @@ style.innerHTML = `
   .selected {
     background-color: #d3d3d3;
     font-weight: bold;
+  }
+
+  .task-margin-adjust {
+    margin-top: 5vh;
   }
 `;
 document.head.appendChild(style);
@@ -332,6 +348,15 @@ function saveAndRender() {
   render();
   clearTasks();
   updateTodoList();
+
+  const selectedListName = lists.find(list => `list-item-${lists.indexOf(list)}` === selectedListId).name;
+  if (selectedListName === 'All Tasks') {
+    taskForm.style.display = 'none';
+    toDoUl.classList.add('task-margin-adjust');
+  } else {
+    taskForm.style.display = '';
+    toDoUl.classList.remove('task-margin-adjust');
+  }
 }
 
 saveAndRender();
