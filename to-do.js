@@ -18,17 +18,17 @@ const taskContainer = document.querySelector('[data-tasks]');
 let lists;
 try {
   lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [
+    {name: 'All Tasks'},
     {name: 'Your Day'},
     {name: 'Important'},
-    {name: 'Planned'},
-    {name: 'All Tasks'}
+    {name: 'Planned'}
   ];
 } catch (error) {
   lists = [
+    {name: 'All Tasks'},
     {name: 'Your Day'},
     {name: 'Important'},
-    {name: 'Planned'},
-    {name: 'All Tasks'},
+    {name: 'Planned'}
   ];
 }
 
@@ -47,18 +47,18 @@ function clearElements(element) {
 function renderList() {
   // list icons
   const listIcon = {
+    'All Tasks': 'fa-solid fa-house-user',
     'Your Day': 'fa-solid fa-sun',
     'Important': 'fa-regular fa-star',
-    'Planned': 'fa-regular fa-calendar-alt',
-    'All Tasks': 'fa-solid fa-house-user'
+    'Planned': 'fa-regular fa-calendar-alt'
   };
 
   // list icons style
   const listStyle = {
+    'All Tasks': 'color: #475569;',
     'Your Day': 'color: #74C0FC;',
     'Important': 'color: #925490;',
-    'Planned': 'color: #63E6BE;',
-    'All Tasks': 'color: #475569;'
+    'Planned': 'color: #63E6BE;'
   };
 
   lists.forEach((list, index) => {
@@ -105,16 +105,16 @@ function render() {
   } else {
     listDisplayContainer.style.display = '';
     const listIcon = {
+      'All Tasks': 'fa-solid fa-house-user',
       'Your Day': 'fa-solid fa-sun',
       'Important': 'fa-regular fa-star',
-      'Planned': 'fa-regular fa-calendar-alt',
-      'All Tasks': 'fa-solid fa-house-user',
+      'Planned': 'fa-regular fa-calendar-alt'
     };
     const listStyle = {
+      'All Tasks': 'color: #475569;',
       'Your Day': 'color: #74C0FC;',
       'Important': 'color: #925490;',
-      'Planned': 'color: #63E6BE;',
-      'All Tasks': 'color: #475569;'
+      'Planned': 'color: #63E6BE;'
     };
     const iconClass = listIcon[selectedList.name];
     const iconStyle = listStyle[selectedList.name];
