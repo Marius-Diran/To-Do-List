@@ -267,8 +267,10 @@ function createTodoForAllTasks(todos, listName, todoIndex) {
     'Planned': 'color: #63E6BE;'
   };
 
-  const iconClass = listIcon[listName];  // Get the icon class for the list
-  const style = listStyle[listName];  // Get the icon style for the list
+  // Find the list to get its icon and style
+  const list = lists.find(list => list.name === listName);
+  const iconClass = list.icon || listIcon[listName] || listIcon[list.name];  // Get the icon class for the list
+  const style = listStyle[listName] || listIcon[list.name] || 'color: #74C0FC;';  // Get the icon style for the list
 
   todoLi.innerHTML = `
     <input type="checkbox" id="${todoId}" class="mx-4 mt-3">
