@@ -73,6 +73,14 @@ function renderList() {
     listElement.innerHTML = `<h1 class="text-base font-JetBrainsMono ml-16 my-4"><i class="${listIcons} mr-4 text-base" style="color: #74C0FC; ${iconStyle}"></i>${list.name}</h1>`;
     listElement.id = `list-item-${index}`
     listContainer.appendChild(listElement);
+
+    // Add a line under the "All Tasks" list item
+    if (list.name === 'All Tasks') {
+      const hrElement = document.createElement('hr');
+      hrElement.style.borderWidth = '1px';
+      hrElement.style.borderColor = '#4b5563';
+      listContainer.appendChild(hrElement);
+    }
   });
 };
 
