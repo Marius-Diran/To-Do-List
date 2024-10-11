@@ -48,3 +48,9 @@ input[type="checkbox"]:checked + .custom-checkbox {
 input[type="search"]::-webkit-search-cancel-button {
   @apply appearance-none;
 }
+
+@media (max-width: 500px){
+  .logo {
+    height: 12vh;
+  }
+}

@@ -1,3 +1,4 @@
+// TODO Refactor the code
 // Constants
 const LOCAL_STORAGE_LIST_KEY = 'task.lists'; 
 const LOCAL_STORAGE_LIST_ID_KEY = 'task.selectedListId';
