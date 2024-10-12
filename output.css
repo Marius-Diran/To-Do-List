@@ -570,6 +570,12 @@ video {
   width: 100%;
 }
 
+@media (min-width: 320px){
+  .container{
+    max-width: 320px;
+  }
+}
+
 @media (min-width: 640px){
   .container{
     max-width: 640px;
@@ -612,76 +618,20 @@ video {
   left: 15vw;
 }
 
-.left-\[29\.5vw\]{
-  left: 29.5vw;
+.left-\[3\.6vw\]{
+  left: 3.6vw;
 }
 
 .left-\[45vw\]{
   left: 45vw;
 }
 
-.top-\[19\.5vh\]{
-  top: 19.5vh;
+.top-\[4\.1vh\]{
+  top: 4.1vh;
 }
 
 .top-\[6\.7vh\]{
   top: 6.7vh;
-}
-
-.left-\[0vw\]{
-  left: 0vw;
-}
-
-.top-\[0vh\]{
-  top: 0vh;
-}
-
-.left-\[5vw\]{
-  left: 5vw;
-}
-
-.left-\[3vw\]{
-  left: 3vw;
-}
-
-.top-\[3vh\]{
-  top: 3vh;
-}
-
-.left-\[4vw\]{
-  left: 4vw;
-}
-
-.top-\[3\.5vh\]{
-  top: 3.5vh;
-}
-
-.top-\[3\.7vh\]{
-  top: 3.7vh;
-}
-
-.top-\[3\.9vh\]{
-  top: 3.9vh;
-}
-
-.left-\[3\.8vw\]{
-  left: 3.8vw;
-}
-
-.left-\[3\.5vw\]{
-  left: 3.5vw;
-}
-
-.top-\[4vh\]{
-  top: 4vh;
-}
-
-.left-\[3\.6vw\]{
-  left: 3.6vw;
-}
-
-.top-\[4\.1vh\]{
-  top: 4.1vh;
 }
 
 .mx-12{
@@ -1076,9 +1026,9 @@ input[type="search"]::-webkit-search-cancel-button{
           appearance: none;
 }
 
-@media (max-width: 500px){
+@media (min-width: 320px) and (max-width: 500px) {
   .logo {
-    height: 12vh;
+    height: 8vh;
   }
 }
 
@@ -1091,12 +1041,39 @@ input[type="search"]::-webkit-search-cancel-button{
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
 }
 
-@media (max-width: 500px){
-  .max-lg\:w-\[50\%\]{
-    width: 50%;
+@media (min-width: 320px) and (max-width: 500px){
+  .phones\:left-\[6vw\]{
+    left: 6vw;
   }
 
-  .max-lg\:text-red-500{
+  .phones\:mx-5{
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+
+  .phones\:mx-auto{
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .phones\:hidden{
+    display: none;
+  }
+
+  .phones\:w-\[60\%\]{
+    width: 60%;
+  }
+
+  .phones\:w-fit{
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+
+  .phones\:text-\[1\.5rem\]{
+    font-size: 1.5rem;
+  }
+
+  .phones\:text-red-500{
     --tw-text-opacity: 1;
     color: rgb(239 68 68 / var(--tw-text-opacity));
   }

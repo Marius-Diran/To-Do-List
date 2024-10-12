@@ -10,9 +10,9 @@
   <div class="container">
     <div class="flex flex-row">
 
-      <div class="flex-auto w-[25%] border border-solid h-[90vh] bg-gray-100 my-10 rounded-tl-lg rounded-bl-lg nav-panel overflow-y-auto">
-        <img src="images/To-Do list Logo.png" class="w-[65%] h-[20vh] mx-auto my-4 max-lg:w-[50%] logo">
-        <h1 class="font-Lobster text-3xl text-center max-lg:text-red-500">Marius To-Do List</h1>
+      <div class="flex-auto w-[25%] border border-solid h-[90vh] bg-gray-100 my-10 rounded-tl-lg rounded-bl-lg overflow-y-auto phones:hidden nav-panel">
+        <img src="images/To-Do list Logo.png" class="w-[65%] h-[20vh] mx-auto my-4 phones:w-[60%] logo">
+        <h1 class="font-Lobster text-3xl text-center phones:text-red-500">Marius To-Do List</h1>
         <ul class="list" data-lists>
           
         </ul>
@@ -37,11 +37,12 @@
         
       </div>
 
-      <div class="flex-auto w-[75%] border border-solid h-[90vh] my-10 rounded-tr-lg rounded-br-lg bg-slate-100 main-panel overflow-y-auto" data-list-display-container>
-        <h1 class="text-2xl font-Lobster ml-[28vw] mt-8 mb-4" data-list-title><i class="fa-solid fa-sun mr-4 text-3xl" style="color: #74C0FC;"></i>Your Day</h1>
+      <div class="flex-auto w-[75%] border border-solid h-[90vh] my-10 rounded-tr-lg rounded-br-lg bg-slate-100 overflow-y-auto main-panel" data-list-display-container>
+        <h1 class="text-2xl font-Lobster ml-[28vw] mt-8 mb-4 phones:text-[1.5rem] phones:mx-auto phones:w-fit" data-list-title><i class="fa-solid fa-sun mr-4 text-3xl" style="color: #74C0FC;"></i>Your Day</h1>
 
         <div class="search-container relative">
-          <i class="fa-solid fa-magnifying-glass absolute left-[3.6vw] top-[4.1vh] text-sm" style="color: #6b7280;"></i><input type="search" id="search" placeholder="Search" class="mt-[3vh] mx-12 h-[4vh] font-JetBrainsMono px-8 text-gray-800 rounded-md text-sm bg-gray-200 outline-none search">
+          <i class="fa-solid fa-magnifying-glass absolute left-[3.6vw] top-[4.1vh] text-sm phones:left-[6vw]" style="color: #6b7280;"></i>
+          <input type="search" id="search" placeholder="Search" class="mt-[3vh] mx-12 h-[4vh] font-JetBrainsMono px-8 text-gray-800 rounded-md text-sm bg-gray-200 outline-none phones:w-[60%] phones:mx-5 search">
         </div>
 
         <form id="task-form">
